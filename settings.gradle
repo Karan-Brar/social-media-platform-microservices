@@ -1,0 +1,14 @@
+rootProject.name = 'social-media-platform'
+
+
+include 'user-service'
+include 'post-service'
+include 'comment-service'
+include 'notification-service'
+include 'feed-service'
+include 'user-service'
+include 'post-service'
+include 'comment-service'
+include 'notification-service'
+include 'feed-service'
+
