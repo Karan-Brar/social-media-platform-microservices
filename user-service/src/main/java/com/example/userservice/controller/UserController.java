@@ -24,19 +24,19 @@ public class UserController {
     }
 
     // GET endpoint to obtain an existing user by id
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public Optional<User> getUserById(@PathVariable String id){
         return userService.getUserbyId(id);
     }
 
     // GET endpoint to obtain an existing user by username
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public Optional<User> getUserByUsername(@PathVariable String username){
         return userService.getUserByUsername(username);
     }
 
-    // GET endpoint to obtain an existing user by email3
-    @GetMapping("/{email}")
+    // GET endpoint to obtain an existing user by email
+    @GetMapping("/email/{email}")
     public Optional<User> getUserByEmail(@PathVariable String email){
         return userService.getUserByEmail(email);
     }
@@ -50,7 +50,7 @@ public class UserController {
 
     // PATCH endpoint to update the email of an existing user
     @PatchMapping("{id}/email")
-    public User updateEmail(@PathVariable String id, @RequestBody Map<String, String> request){
+    public ResponseEntity<?>  updateEmail(@PathVariable String id, @RequestBody Map<String, String> request){
         String newEmail = request.get("newEmail");
         return userService.updateEmail(id, newEmail);
     }

@@ -75,16 +75,24 @@ public class UserService {
     }
 
     // Update a user's e-mail
-    public User updateEmail(String id, String newEmail){
+    public ResponseEntity<?> updateEmail(String id, String newEmail){
         Optional<User> existingUser = userRepository.findById(id);
 
         if(existingUser.isPresent()) {
-            User user = existingUser.get();
-            user.setUsername(newEmail);
-            return userRepository.save(user);
+            try{
+                User user = existingUser.get();
+                user.setEmail(newEmail);
+                User savedUser = userRepository.save(user);
+                return ResponseEntity.status(HttpStatus.OK).body(savedUser);
+            }
+            catch(DuplicateKeyException e) {
+                String errorMessage = "User with e-mail already exists";
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(errorMessage));
+            }
         }
 
-        throw new RuntimeException("User Not Found");
+        String errorMessage = "User not found";
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(errorMessage));
     }
 
     // Update a user's password
