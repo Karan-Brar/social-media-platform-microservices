@@ -57,7 +57,7 @@ public class UserController {
 
     // PATCH endpoint to update the password of an existing user
     @PatchMapping("{id}/password")
-    public User updatePassword(@PathVariable String id, @RequestBody Map<String, String> request){
+    public ResponseEntity<?> updatePassword(@PathVariable String id, @RequestBody Map<String, String> request){
         String newPassword = request.get("newPassword");
         return userService.updatePassword(id, newPassword);
     }

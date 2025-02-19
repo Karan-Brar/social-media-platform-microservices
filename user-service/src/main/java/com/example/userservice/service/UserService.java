@@ -71,7 +71,7 @@ public class UserService {
         }
 
         String errorMessage = "User not found";
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(errorMessage));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(errorMessage));
     }
 
     // Update a user's e-mail
@@ -92,20 +92,22 @@ public class UserService {
         }
 
         String errorMessage = "User not found";
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(errorMessage));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(errorMessage));
     }
 
     // Update a user's password
-    public User updatePassword(String id, String newPassword){
+    public ResponseEntity<?> updatePassword(String id, String newPassword){
         Optional<User> existingUser = userRepository.findById(id);
 
         if(existingUser.isPresent()) {
             User user = existingUser.get();
             user.setPassword(newPassword);
-            return userRepository.save(user);
+            User savedUser = userRepository.save(user);
+            return ResponseEntity.status(HttpStatus.OK).body(savedUser);
         }
 
-        throw new RuntimeException("User Not Found");
+        String errorMessage = "User not found";
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(errorMessage));
     }
 
 
