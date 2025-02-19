@@ -3,6 +3,7 @@ package com.example.userservice.controller;
 import com.example.userservice.model.User;
 import com.example.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class UserController {
 
     // POST endpoint to create a new user
     @PostMapping
-    public User createUser(@RequestBody User user){
+    public ResponseEntity<?> createUser(@RequestBody User user){
         return userService.createUser(user);
     }
 
@@ -34,7 +35,7 @@ public class UserController {
         return userService.getUserByUsername(username);
     }
 
-    // GET endpoint to obtain an existing user by email
+    // GET endpoint to obtain an existing user by email3
     @GetMapping("/{email}")
     public Optional<User> getUserByEmail(@PathVariable String email){
         return userService.getUserByEmail(email);
@@ -42,7 +43,7 @@ public class UserController {
 
     // PATCH endpoint to update the username of an existing user
     @PatchMapping("{id}/username")
-    public User updateUsername(@PathVariable String id, @RequestBody Map<String, String> request){
+    public ResponseEntity<?> updateUsername(@PathVariable String id, @RequestBody Map<String, String> request){
         String newUsername = request.get("newUsername");
         return userService.updateUsername(id, newUsername);
     }
