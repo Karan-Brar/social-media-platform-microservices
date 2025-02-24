@@ -29,7 +29,7 @@ public class PostController {
     }
 
     // GET Mapping to get a post by the id of the user who made the post
-    @GetMapping("/userId/{userid}")
+    @GetMapping("/userId/{userId}")
     public List<Post> getPostsByUserid(@PathVariable String userId){
         return postService.getPostsByUserId(userId);
     }
@@ -43,7 +43,7 @@ public class PostController {
 
     // DELETE endpoint to delete an existing post
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable String id){
+    public void deletePost(@PathVariable String id){
         postService.deletePost(id);
     }
 

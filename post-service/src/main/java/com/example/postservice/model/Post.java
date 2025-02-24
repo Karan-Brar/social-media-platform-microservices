@@ -2,6 +2,7 @@ package com.example.postservice.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +15,7 @@ public class Post {
 
     private String content;
 
+    @CreatedDate
     private LocalDateTime createdAt;
 
     public void Post() {}
@@ -21,7 +23,6 @@ public class Post {
     public void Post(String userId, String content){
         this.userId = userId;
         this.content = content;
-        this.createdAt = LocalDateTime.now();
     }
 
     // Getters and Setters
