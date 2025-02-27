@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface PostRepository extends MongoRepository<Post, String> {
     List<Post> findByUserId(String userId); // Find all the posts by a specific user
+    void deleteByUserId(String userId); // Deletes all posts by a specific user
 }

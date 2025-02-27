@@ -58,6 +58,11 @@ public class PostService {
         }
     }
 
+    public void deletePostsByUser(String userId){
+        postRepository.deleteByUserId(userId);
+    }
+
+
     public List<Post> getAllPosts(){
         return postRepository.findAll();
     }
