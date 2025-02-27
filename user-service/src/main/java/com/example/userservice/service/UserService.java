@@ -1,5 +1,6 @@
 package com.example.userservice.service;
 
+import com.example.userservice.kafka.producer.UserEventProducer;
 import com.example.userservice.misc.ErrorResponse;
 import com.example.userservice.model.User;
 import com.example.userservice.repository.UserRepository;
@@ -17,6 +18,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserEventProducer userEventProducer;
 
     // Create a new User
     public ResponseEntity<?> createUser(User user){
@@ -117,6 +121,7 @@ public class UserService {
 
         if(existingUser.isPresent()){
             userRepository.deleteById(id);
+            userEventProducer.sendUserDeletedEvent(id);
         }
         else {
             throw new RuntimeException("User Not Found");
