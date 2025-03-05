@@ -23,7 +23,7 @@ public class PostController {
     }
 
     // GET Mapping to get a post by its ID
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public Optional<Post> getPostById(@PathVariable String id){
         return postService.getPostById(id);
     }

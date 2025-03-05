@@ -60,4 +60,7 @@ public class CommentService {
         commentRepository.deleteByPostId(postId);
     }
 
+    public List<Comment> getAllComments(){
+        return commentRepository.findAll();
+    }
 }

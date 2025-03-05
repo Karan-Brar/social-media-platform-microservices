@@ -24,7 +24,7 @@ public class UserController {
     }
 
     // GET endpoint to obtain an existing user by id
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public Optional<User> getUserById(@PathVariable String id){
         return userService.getUserbyId(id);
     }
