@@ -48,9 +48,9 @@ public class PostService {
     }
 
     public void deletePost(String id){
-        Optional<Post> existingUser = postRepository.findById(id);
+        Optional<Post> existingPost = postRepository.findById(id);
 
-        if(existingUser.isPresent()){
+        if(existingPost.isPresent()){
             postRepository.deleteById(id);
         }
         else {
