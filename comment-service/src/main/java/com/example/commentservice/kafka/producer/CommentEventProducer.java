@@ -1,7 +1,6 @@
 package com.example.commentservice.kafka.producer;
 
 import com.example.commentservice.model.Comment;
-import com.example.commentservice.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
