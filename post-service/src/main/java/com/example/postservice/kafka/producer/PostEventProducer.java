@@ -9,9 +9,9 @@ public class PostEventProducer {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    private static final String POST_DELTED_TOPIC = "post-deleted";
+    private static final String POST_DELETED_TOPIC = "post-deleted";
 
     public void sendPostDeletedEvent(String postId){
-        kafkaTemplate.send(POST_DELTED_TOPIC, postId);
+        kafkaTemplate.send(POST_DELETED_TOPIC, postId);
     }
 }

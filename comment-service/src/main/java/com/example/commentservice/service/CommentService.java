@@ -1,5 +1,6 @@
 package com.example.commentservice.service;
 
+import com.example.commentservice.kafka.producer.CommentEventProducer;
 import com.example.commentservice.misc.ErrorResponse;
 import com.example.commentservice.model.Comment;
 import com.example.commentservice.repository.CommentRepository;
@@ -17,10 +18,13 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private CommentEventProducer commentEventProducer;
+
     public ResponseEntity<?> createComment(Comment comment){
         try {
             Comment savedComment = commentRepository.save(comment);
-
+            commentEventProducer.sendCommentCreatedEvent(savedComment);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
         }
         catch(Exception e) {
