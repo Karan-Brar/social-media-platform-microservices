@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.0
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.0.0
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+
+  user-service:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_DATA_MONGODB_URI: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0.6cxvnj4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      SPRING_DATA_MONGODB_DATABASE: social_media_microservices
+    depends_on:
+      - kafka
+      - mongo
+
+  post-service:
+    build:
+      context: .
+      dockerfile: post-service/Dockerfile
+    container_name: post-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_DATA_MONGODB_URI: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0.6cxvnj4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      SPRING_DATA_MONGODB_DATABASE: social_media_microservices
+    depends_on:
+      - kafka
+      - mongo
+
+  comment-service:
+    build:
+      context: .
+      dockerfile: comment-service/Dockerfile
+    container_name: comment-service
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_DATA_MONGODB_URI: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0.6cxvnj4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      SPRING_DATA_MONGODB_DATABASE: social_media_microservices
+    depends_on:
+      - kafka
+      - mongo
+
+  like-service:
+    build:
+      context: .
+      dockerfile: like-service/Dockerfile
+    container_name: like-service
+    ports:
+      - "8086:8086"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_DATA_MONGODB_URI: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0.6cxvnj4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      SPRING_DATA_MONGODB_DATABASE: social_media_microservices
+    depends_on:
+      - kafka
+      - mongo
+
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

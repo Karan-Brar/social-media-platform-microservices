@@ -11,4 +11,5 @@ include 'post-service'
 include 'comment-service'
 include 'notification-service'
 include 'feed-service'
+include 'like-service'
 
